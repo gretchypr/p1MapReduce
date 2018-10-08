@@ -11,12 +11,12 @@ public class FindRetweets {
 
 	public static void main(String[] args) throws Exception {
         if (args.length != 2) {
-            System.err.println("Usage: CountNamesByState <input path> <output path>");
+            System.err.println("Usage: FindRetweets <input path> <output path>");
             System.exit(-1);
         }
         Job job = new Job();
         job.setJarByClass(bigdata.p1FindRetweets.FindRetweets.class);
-        job.setJobName("Count Names By State");
+        job.setJobName("Find retweets per message");
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));

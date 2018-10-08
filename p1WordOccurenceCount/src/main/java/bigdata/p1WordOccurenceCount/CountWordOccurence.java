@@ -15,7 +15,7 @@ public class CountWordOccurence {
         }
         Job job = new Job();
         job.setJarByClass(bigdata.p1WordOccurenceCount.CountWordOccurence.class);
-        job.setJobName("Count Number of Tweets that contain these words:");
+        job.setJobName("Count Number of occurences for these words: Trump, Flu, Zika, Diarrhea, Ebola, Headache, Measles");
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));

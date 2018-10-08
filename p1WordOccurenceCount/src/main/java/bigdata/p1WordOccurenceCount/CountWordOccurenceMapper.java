@@ -6,20 +6,20 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Mapper.Context;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class CountWordOccurenceMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
 	 @Override
 	    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-	        String cols[] = value.toString().split(",");
+		 	// Get the received JSON
+		 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
 	        String newKey = "";
-	        // get the state name, located in column
-	        String extended_message = cols[17];
-	        // Split message as well (JSON)
-	        String[] ext_msg_properties = extended_message.split(",");
 	        // Get full text
-	        String full_text = ext_msg_properties[0];
+	        String full_text = twitter_json.get("extended_tweet").get("full_text").textValue();
 	        
 	        if(full_text.contains("Trump") || full_text.contains("trump")) {
 	        	newKey = "Trump";

@@ -53,6 +53,11 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.7</version>
+  </dependency>
 
   <build>
     <finalName>p1WordOccurenceCount-${project.version}</finalName>

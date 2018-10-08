@@ -3,28 +3,24 @@ package bigdata.KeywordCount;
 import java.io.IOException;
 import java.util.HashSet;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Mapper.Context;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
 
 public class CountKeywordOccurenceMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
 	 @Override
 	    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-	        String cols[] = value.toString().split(",");
-	        // get extended message
-	        String extended_message = cols[17];
-	        // Split message as well (JSON)
-	        String[] ext_msg_properties = extended_message.split(",");
-	        // Get full text key value pair
-	        String[] full_text_key_value = ext_msg_properties[0].split(":");
-	        // Get full text value
-	        String full_text_value = full_text_key_value[1];
-	        // Get just the message string (no quotes ("))
-	        String full_text_string =  full_text_value.substring(full_text_value.indexOf("\""), full_text_value.lastIndexOf("\""));
+		 	// Get the received JSON
+		 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
+	        // Get full text
+	        String full_text_string = twitter_json.get("extended_tweet").get("full_text").textValue();
 	        // Get each words from the message string
 	        String[] full_text = full_text_string.split(" ");
 	        

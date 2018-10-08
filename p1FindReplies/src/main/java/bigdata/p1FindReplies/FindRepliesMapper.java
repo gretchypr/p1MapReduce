@@ -1,4 +1,4 @@
-package bigdata.p1FindRetweets;
+package bigdata.p1FindReplies;
 
 import java.io.IOException;
 
@@ -9,21 +9,23 @@ import org.apache.hadoop.mapreduce.Mapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FindRetweetsMapper extends Mapper<LongWritable, Text, Text, Text>{
+public class FindRepliesMapper extends Mapper<LongWritable, Text, Text, Text>{
 	@Override
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
 		// Get the received JSON
 	 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
-	 	String message = twitter_json.get("extended_tweet").get("full_text").textValue();
+	 	String reply_id = twitter_json.get("in_reply_to_status_id_str").textValue();
+	 	String reply_message = twitter_json.get("extended_tweet").get("full_text").textValue();
+    	String reply_message_id = twitter_json.get("id_str").textValue();
         // Check if retweet
-        if(twitter_json.has("retweeted_status")) {
-        	String retweeted_message = twitter_json.get("retweeted_status").get("extended_tweet").get("full_text").textValue();
-        	context.write(new Text(retweeted_message), new Text(message));
+        if(!reply_id.equals("")) {
+        	context.write(new Text(reply_id), new Text(reply_message));
         }
         else {
-        	context.write(new Text(message), new Text("0"));
+        	context.write(new Text(reply_message_id), new Text("A-" + reply_message));
         }
 
     }
+
 }

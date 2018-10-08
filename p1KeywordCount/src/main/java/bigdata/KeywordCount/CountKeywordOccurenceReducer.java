@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.Reducer.Context;
 
 public class CountKeywordOccurenceReducer extends Reducer<Text, IntWritable, Text, IntWritable>{
 	 @Override

@@ -1,4 +1,4 @@
-package bigdata.p1FindRetweets;
+package bigdata.p1FindCountMessagesByUser;
 
 import java.io.IOException;
 
@@ -9,21 +9,15 @@ import org.apache.hadoop.mapreduce.Mapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class FindRetweetsMapper extends Mapper<LongWritable, Text, Text, Text>{
+public class FindCountMessagesByUserMapper extends Mapper<LongWritable, Text, Text, Text>{
 	@Override
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
 		// Get the received JSON
 	 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
+	 	String screen_name = twitter_json.get("user").get("screen_name").textValue();
 	 	String message = twitter_json.get("extended_tweet").get("full_text").textValue();
-        // Check if retweet
-        if(twitter_json.has("retweeted_status")) {
-        	String retweeted_message = twitter_json.get("retweeted_status").get("extended_tweet").get("full_text").textValue();
-        	context.write(new Text(retweeted_message), new Text(message));
-        }
-        else {
-        	context.write(new Text(message), new Text("0"));
-        }
 
+        context.write(new Text(screen_name), new Text(message));
     }
 }
