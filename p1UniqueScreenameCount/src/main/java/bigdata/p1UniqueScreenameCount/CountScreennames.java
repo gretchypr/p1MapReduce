@@ -25,7 +25,7 @@ public class CountScreennames {
         job.setReducerClass(bigdata.p1UniqueScreenameCount.CountScreennamesReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(Text.class);
+        job.setMapOutputValueClass(Text .class);
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(Text.class);
 
