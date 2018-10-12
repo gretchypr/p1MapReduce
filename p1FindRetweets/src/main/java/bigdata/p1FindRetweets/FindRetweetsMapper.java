@@ -18,7 +18,6 @@ public class FindRetweetsMapper extends Mapper<LongWritable, Text, Text, Text>{
 	 	String message = twitter_json.get("extended_tweet").get("full_text").textValue();
         // Check if retweet
         if(twitter_json.has("retweeted_status")) {
-        	System.out.println("TRUE");
         	String retweeted_message = twitter_json.get("retweeted_status").get("extended_tweet").get("full_text").textValue();
         	context.write(new Text(retweeted_message), new Text(message));
         }

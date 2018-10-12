@@ -19,7 +19,7 @@ public class FindRepliesMapper extends Mapper<LongWritable, Text, Text, Text>{
 	 	String reply_message = twitter_json.get("extended_tweet").get("full_text").textValue();
     	String reply_message_id = twitter_json.get("id_str").textValue();
         // Check if retweet
-        if(!reply_id.equals("")) {
+        if(reply_id != null) {
         	context.write(new Text(reply_id), new Text(reply_message));
         }
         else {
