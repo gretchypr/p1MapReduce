@@ -38,7 +38,7 @@ public class CountScreennames {
         job2.setJarByClass(bigdata.p1UniqueScreenameCount.CountScreennames.class);
         job2.setJobName("Find all the unique screennames");
 
-        FileInputFormat.addInputPath(job2,  new Path("/output/inter/part*"));
+        FileInputFormat.addInputPath(job2,  new Path("output/inter/part*"));
         FileOutputFormat.setOutputPath(job2, new Path(args[1]));
 
         job2.setMapperClass(bigdata.p1UniqueScreenameCount.CountScreennamesMapper2.class);
@@ -52,7 +52,7 @@ public class CountScreennames {
         
         if(job2.waitForCompletion(true)) {
     		FileSystem fs = new RawLocalFileSystem();
-    		fs.delete(new Path("/output/inter/part*"), true);
+    		fs.delete(new Path("output/inter/part*"), true);
     		fs.close();
         	System.exit(0);
         }
