@@ -31,6 +31,8 @@ public class CountScreennames {
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(Text.class);
         
+        job.waitForCompletion(true);
+        
         Job job2 = new Job();
         job2.setJarByClass(bigdata.p1UniqueScreenameCount.CountScreennames.class);
         job2.setJobName("Find all the unique screennames");
