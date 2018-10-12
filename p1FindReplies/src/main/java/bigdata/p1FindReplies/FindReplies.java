@@ -25,6 +25,9 @@ public class FindReplies {
         job.setMapperClass(bigdata.p1FindReplies.FindRepliesMapper.class);
         job.setReducerClass(bigdata.p1FindReplies.FindRepliesReducer.class);
 
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(Text.class);
+        
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         System.exit(job.waitForCompletion(true) ? 0 : 1);

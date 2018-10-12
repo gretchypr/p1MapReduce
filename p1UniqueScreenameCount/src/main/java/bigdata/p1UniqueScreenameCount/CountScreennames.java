@@ -45,18 +45,12 @@ public class CountScreennames {
         job2.setReducerClass(bigdata.p1UniqueScreenameCount.CountScreennamesReducer2.class);
 
         job2.setMapOutputKeyClass(Text.class);
-        job2.setMapOutputValueClass(Text .class);
+        job2.setMapOutputValueClass(Text.class);
         
         job2.setOutputKeyClass(IntWritable.class);
         job2.setOutputValueClass(Text.class);
         
-        if(!job2.waitForCompletion(true)) {
-    		FileSystem fs = new RawLocalFileSystem();
-    		fs.delete(new Path("output/inter/part*"), true);
-    		fs.delete(new Path("output/inter"), true);
-    		fs.close();
-        	System.exit(0);
-        }
+        System.exit(job2.waitForCompletion(true) ? 0 : 1);
         
     }
 

@@ -24,6 +24,9 @@ public class FindRetweets {
         job.setMapperClass(bigdata.p1FindRetweets.FindRetweetsMapper.class);
         job.setReducerClass(bigdata.p1FindRetweets.FindRetweetsReducer.class);
 
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(Text.class);
+        
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 

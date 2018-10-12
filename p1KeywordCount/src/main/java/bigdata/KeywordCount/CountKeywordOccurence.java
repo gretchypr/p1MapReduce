@@ -23,6 +23,9 @@ public class CountKeywordOccurence {
 	        job.setMapperClass(bigdata.KeywordCount.CountKeywordOccurenceMapper.class);
 	        job.setReducerClass(bigdata.KeywordCount.CountKeywordOccurenceReducer.class);
 
+	        job.setMapOutputKeyClass(Text.class);
+	        job.setMapOutputValueClass(IntWritable.class);
+	        
 	        job.setOutputKeyClass(Text.class);
 	        job.setOutputValueClass(IntWritable.class);
 
