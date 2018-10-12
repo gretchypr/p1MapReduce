@@ -15,7 +15,8 @@ public class FindRetweetsReducer extends Reducer<Text, Text, Text, Text>{
         // Count
         for (Text value : values ){
         	messages_set.add(value.toString());
-        	System.out.println(value.toString());
+        	if(!value.toString().equals("0"))
+        		System.out.println(value.toString());
         }
         // If it has a 0 then the retweeted message is one of the messages received in the input
         if(messages_set.contains("0")) {
