@@ -21,7 +21,7 @@ public class CountScreennames {
         job.setJobName("Find all the unique screennames");
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path("/output/inter"));
+        FileOutputFormat.setOutputPath(job, new Path("output/inter"));
 
         job.setMapperClass(bigdata.p1UniqueScreenameCount.CountScreennamesMapper.class);
         job.setReducerClass(bigdata.p1UniqueScreenameCount.CountScreennamesReducer.class);
