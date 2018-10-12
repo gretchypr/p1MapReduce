@@ -21,29 +21,37 @@ public class CountWordOccurenceMapper extends Mapper<LongWritable, Text, Text, I
 	        // Get full text
 	        String full_text = twitter_json.get("extended_tweet").get("full_text").textValue();
 	        
-	        if(full_text.contains("Trump") || full_text.contains("trump")) {
-	        	newKey = "Trump";
-	        }
-	        if(full_text.contains("Flu") || full_text.contains("flu")) {
-	        	newKey = "Flu";
-	        }
-	        if(full_text.contains("Zika") || full_text.contains("zika")) {
-	        	newKey = "Zika";
-	        }
-	        if(full_text.contains("Diarrhea") || full_text.contains("diarrhea")) {
-	        	newKey = "Diarrhea";
-	        }
-	        if(full_text.contains("Ebola") || full_text.contains("ebola")) {
-	        	newKey = "Ebola";
-	        }
-	        if(full_text.contains("Headache") || full_text.contains("headache")) {
-	        	newKey = "Headache";
-	        }
-	        if(full_text.contains("Measles") || full_text.contains("Measles")) {
-	        	newKey = "Measles";
-	        }
-	        if(!newKey.equals(""))
-	        	context.write(new Text(newKey), new IntWritable(1));
+	        String[] words = full_text.split(" ");
+	        for (String word: words) {
+	        	 if(word.contains("Trump") || word.contains("trump")) {
+	 	        	newKey = "Trump";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	 	        if(word.contains("Flu") || word.contains("flu")) {
+	 	        	newKey = "Flu";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	 	        if(word.contains("Zika") || word.contains("zika")) {
+	 	        	newKey = "Zika";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	 	        if(word.contains("Diarrhea") || word.contains("diarrhea")) {
+	 	        	newKey = "Diarrhea";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	 	        if(word.contains("Ebola") || word.contains("ebola")) {
+	 	        	newKey = "Ebola";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	 	        if(word.contains("Headache") || word.contains("headache")) {
+	 	        	newKey = "Headache";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	 	        if(word.contains("Measles") || word.contains("Measles")) {
+	 	        	newKey = "Measles";
+	 	        	context.write(new Text(newKey), new IntWritable(1));
+	 	        }
+	        }	       
 
 	    }
 }

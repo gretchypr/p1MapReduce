@@ -17,7 +17,7 @@ public class CountKeywordOccurenceReducer extends Reducer<Text, IntWritable, Tex
 	            count++;
 	        }
 
-	        context.write(key, new IntWritable(count));
+	        context.write(new Text("[" + key.toString() + "]"), new IntWritable(count));
 	    }
 
 }
