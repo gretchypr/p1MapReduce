@@ -14,7 +14,7 @@ public class CountScreennamesMapper2 extends Mapper<LongWritable, Text, Text, Te
 	@Override
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-		String[] value_pair = value.toString().split(" ");
+		String[] value_pair = value.toString().split("\t");
 		context.write(new Text("user_name"), new Text(value_pair[0]));
 
     }

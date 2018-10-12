@@ -50,9 +50,10 @@ public class CountScreennames {
         job2.setOutputKeyClass(IntWritable.class);
         job2.setOutputValueClass(Text.class);
         
-        if(job2.waitForCompletion(true)) {
+        if(!job2.waitForCompletion(true)) {
     		FileSystem fs = new RawLocalFileSystem();
     		fs.delete(new Path("output/inter/part*"), true);
+    		fs.delete(new Path("output/inter"), true);
     		fs.close();
         	System.exit(0);
         }
