@@ -19,7 +19,7 @@ public class CountKeywordOccurenceMapper extends Mapper<LongWritable, Text, Text
 
 		 	// Get the received JSON
 		 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
-		 	String tweet_id = twitter_json.get("str_id").textValue();
+		 	String tweet_id = twitter_json.get("id_str").textValue();
 	        // Get full text
 	        String full_text_string = twitter_json.get("extended_tweet").get("full_text").textValue();
 	        // Get each words from the message string

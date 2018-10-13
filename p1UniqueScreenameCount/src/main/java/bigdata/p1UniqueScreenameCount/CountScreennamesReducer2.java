@@ -22,7 +22,6 @@ public class CountScreennamesReducer2 extends Reducer<Text, Text, IntWritable, T
         // iterator over list of 1s, to count them (no size() or length() method available)
         for (Text screenname : values ){
         	// Add screename to set, if already in set then go to next value (don't repeat values)
-        	System.out.println(screenname);
         	if(screenname_set.add(screenname.toString())) {
                 count++;
         	}
