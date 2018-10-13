@@ -16,14 +16,13 @@ public class FindRepliesMapper extends Mapper<LongWritable, Text, Text, Text>{
 		// Get the received JSON
 	 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
 	 	String reply_id = twitter_json.get("in_reply_to_status_id_str").textValue();
-	 	String reply_message = twitter_json.get("extended_tweet").get("full_text").textValue();
     	String reply_message_id = twitter_json.get("id_str").textValue();
         // Check if retweet
         if(reply_id != null) {
-        	context.write(new Text(reply_id), new Text(reply_message));
+        	context.write(new Text(reply_id), new Text(reply_message_id));
         }
         else {
-        	context.write(new Text(reply_message_id), new Text("A-" + reply_message));
+        	context.write(new Text(reply_message_id), new Text("A"));
         }
 
     }

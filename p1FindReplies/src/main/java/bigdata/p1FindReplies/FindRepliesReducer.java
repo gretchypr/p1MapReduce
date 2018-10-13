@@ -12,20 +12,21 @@ public class FindRepliesReducer extends Reducer<Text, Text, Text, Text>{
             throws IOException, InterruptedException {
 	 	// Set of messages
 	 	HashSet<String> mess_set = new HashSet<String>(); 
-	 	String newKey = "";
+	 	boolean isInData = false;
         // Count
         for (Text value : values ){
         	String message_value = value.toString();
-        	if(message_value.contains("-")) {
-        		newKey = message_value.substring(message_value.indexOf("-"));
+        	// Check if this reply is to a message in the input data
+        	if(message_value.contains("A")) {
+        		isInData = true;
         	}
         	else {
         		mess_set.add(message_value);
         	}
         } 
-        if(newKey != "")
+        if(isInData)
         {
-        	context.write(new Text(newKey), new Text(mess_set.toString()));
+        	context.write(key, new Text(mess_set.toString()));
         }
     }
 

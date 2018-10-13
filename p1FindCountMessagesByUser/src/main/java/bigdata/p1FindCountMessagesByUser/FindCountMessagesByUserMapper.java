@@ -16,8 +16,8 @@ public class FindCountMessagesByUserMapper extends Mapper<LongWritable, Text, Te
 		// Get the received JSON
 	 	JsonNode twitter_json = new ObjectMapper().readTree(value.toString());
 	 	String screen_name = twitter_json.get("user").get("screen_name").textValue();
-	 	String message = twitter_json.get("extended_tweet").get("full_text").textValue();
+	 	String tweet_id = twitter_json.get("str_id").textValue();
 
-        context.write(new Text(screen_name), new Text(message));
+        context.write(new Text(screen_name), new Text(tweet_id));
     }
 }
