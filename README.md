@@ -5,4 +5,4 @@ Has several maven projects with MapReduce functions for processing Twitter JSONs
 
 The graphs folder has the output after the MapRduce functions in .cvs files and a .txt file for the username count.
 
-The graphs.html works in Firefox since it depends on local data and other browsers don't normally allow that type of access.
+The graphs.html works in Firefox since it depends on local data and other browsers don't normally allow that type of access. Also the page can be a little slow to load.
