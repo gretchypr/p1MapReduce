@@ -9,22 +9,10 @@ $(document).ready(function(){
         }
         displayWordCountChart(words, count);
     });
-    var psv = d3.dsvFormat("\t");
-    d3.request("screenames.txt")
-      .mimeType("text/plain")
-      .response(function(xhr) { return psv.parse(xhr.responseText) })
-      .get(function(data) {
-          var children = [];
-          data[0]["screen_names"] = data[0]["screen_names"].substring(1, data[0]["screen_names"].length-1).split(",");
-          index = 0;
-          for(var child of data[0]["screen_names"]) {
-              children[index] = {name: child, parent: data[0]["count"]};
-              index++;
-          }
-          var treeData = [{name: data[0]["count"], parent: null, children: children}];
-      });
       displayReplyChart();
-    //  displayUserMessageChart();
+      displayUserMessageChart();
+      displayUsernameChart();
+      displayKeywordChart();
 });
 function displayReplyChart() {
     var svg = d3.select("#replies"),
@@ -50,11 +38,12 @@ function displayReplyChart() {
               var replies = data[i]["replies"].substring(1, data[i]["replies"].length-1).split(",");
               var children = [];
               for (var reply of replies) {
-                  children.push({name:reply.trim(), size:3416});
+                  children.push({name:reply.trim(), size:500});
               }
               root['children'].push({name, children});
           }
       }
+      console.log("Replies " + root['children'].length);
       root = d3.hierarchy(root)
           .sum(function(d) { return d.size; })
           .sort(function(a, b) { return b.value - a.value; });
@@ -111,6 +100,153 @@ function displayReplyChart() {
     });
 
 }
+function displayUsernameChart() {
+    var psv = d3.dsvFormat("\t");
+    var count = [0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var total = 0;
+    d3.request("screenames.txt")
+      .mimeType("text/plain")
+      .response(function(xhr) { return psv.parse(xhr.responseText) })
+      .get(function(data) {
+          data[0]["screen_names"] = data[0]["screen_names"].substring(1, data[0]["screen_names"].length-1).split(",");
+          total = data[0]['count'];
+          for(var name of data[0]["screen_names"]) {
+              switch (name.trim().charAt(0).toUpperCase()) {
+                case 'A':
+                    count[0]++;
+                    break;
+                case 'B':
+                    count[1]++;
+                    break;
+                case 'C':
+                    count[2]++;
+                    break;
+                case 'D':
+                    count[3]++;
+                    break;
+                case 'E':
+                    count[4]++;
+                    break;
+                case 'F':
+                    count[5]++;
+                    break;
+                case 'G':
+                    count[6]++;
+                    break;
+                case 'H':
+                    count[7]++;
+                    break;
+                case 'I':
+                    count[8]++;
+                    break;
+                case 'J':
+                    count[9]++;
+                    break;
+                case 'K':
+                    count[10]++;
+                    break;
+                case 'L':
+                    count[11]++;
+                    break;
+                case 'M':
+                    count[12]++;
+                    break;
+                case 'N':
+                    count[13]++;
+                    break;
+                case 'O':
+                    count[14]++;
+                    break;
+                case 'P':
+                    count[15]++;
+                    break;
+                case 'Q':
+                    count[16]++;
+                    break;
+                case 'R':
+                    count[17]++;
+                    break;
+                case 'S':
+                    count[18]++;
+                    break;
+                case 'T':
+                    count[19]++;
+                    break;
+                case 'U':
+                    count[20]++;
+                    break;
+                case 'V':
+                    count[21]++;
+                    break;
+                case 'W':
+                    count[22]++;
+                    break;
+                case 'X':
+                    count[23]++;
+                    break;
+                case 'Y':
+                    count[24]++;
+                    break;
+                case 'Z':
+                    count[25]++;
+                    break;
+                default:
+                    count[26]++;
+
+              }
+          }
+          new Chart(document.getElementById("usernames"), {
+            type: 'bar',
+            data: {
+              labels: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+                        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+                        'Y', 'Z', '##'],
+              datasets: [
+                {
+                  label: "Username Count",
+                  backgroundColor: ["#A569BD", "#F4D03F", "#3498DB", "#C0392B", "#52BE80",
+                                    "#85929E", "#F08080", "#ff5733", "#7aff33", "#33ffa2",
+                                    "#33c1ff", "#be33ff", "#ff3368", "#88d675", "#abf6d7",
+                                    "#C70039", "#5f7a83", "#e6a8fa", "#396c46", "#881616",
+                                    "#ff6f6f", "#eeff6f", "#54a732", "#7d8f76", "#900C3F",
+                                    "#127e6f", "#d6914f"],
+                  data: count
+                }
+              ]
+            },
+            options: {
+              responsive: false,
+              maintainAspectRatio: true,
+              legend: {
+                display: false
+              },
+              tooltips: {
+                display: false
+              },
+              title: {
+                display: true,
+                fontSize: 30,
+                text: 'Number Unique Scree names ( Total: ' + total + ')'
+              },
+              scales: {
+                yAxes: [{
+                         ticks: {
+                             beginAtZero: true,
+                             steps: 10,
+                             stepValue: 5,
+
+                         }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontSize: 20
+                    }
+                }]
+              }
+            }
+          });
+      });
+}
 function displayUserMessageChart() {
     var svg = d3.select("#messages"),
     margin = 20,
@@ -129,18 +265,20 @@ function displayUserMessageChart() {
     d3.csv("messageCount.csv", function(error, data) {
       if (error) throw error;
       var root = {name: "Messages", children: []};
-      for (var i = 0 ; i < data.length; i++) {
-
-          var name = data[i]['screen_name'];
+      for (var i = 0; i < data.length; i++) {
           var temp = data[i]["messages"].split("-");
-          var messages = temp[1].substring(1, temp.length-1).split(",");
-          var children = [];
-          for (var message of messages) {
-              children.push({name:message.trim(), size:1000});
+          var name = data[i]['screen_name'] + " - " + temp[0];
+          var messages = temp[1].substring(1, temp[1].length-1).split(",");
+          if (messages.length > 3){
+              var children = [];
+              for (var message of messages) {
+                  children.push({name:message.trim(), size:100});
+              }
+              root['children'].push({name, children});
           }
-          root['children'].push({name, children});
 
       }
+      console.log("Messages " + root['children'].length);
       root = d3.hierarchy(root)
           .sum(function(d) { return d.size; })
           .sort(function(a, b) { return b.value - a.value; });
@@ -243,4 +381,77 @@ function displayWordCountChart(words, count) {
       }
     }
   });
+}
+function displayKeywordChart() {
+    var count = [0, 0, 0, 0, 0, 0];
+    var total = 0;
+    d3.csv("keywordCount.csv", function(error, data) {
+      if (error) throw error;
+      for (var i = 0; i < data.length; i++) {
+          var dataCount = parseInt(data[i]['Count']);
+          if (dataCount <= 20) {
+             count[0]++;
+         }
+         else if(dataCount <= 40) {
+             count[1]++;
+         }
+         else if(dataCount <= 60) {
+             count[2]++;
+         }
+         else if(dataCount <= 80) {
+             count[3]++;
+         }
+         else if(dataCount <= 100) {
+             count[4]++;
+         }
+         else{
+              count[5]++;
+         }
+     }
+
+          new Chart(document.getElementById("keyword_count"), {
+            type: 'bar',
+            data: {
+              labels: ['20 or less', '21-40', '41-60', '61-80', '81-100', 'more that 100'],
+              datasets: [
+                {
+                  label: "Username Count",
+                  backgroundColor: ["#ff6f6f", "#eeff6f", "#54a732", "#7d8f76", "#900C3F",
+                                    "#127e6f", "#d6914f"],
+                  data: count
+                }
+              ]
+            },
+            options: {
+              responsive: false,
+              maintainAspectRatio: true,
+              legend: {
+                display: false
+              },
+              tooltips: {
+                display: false
+              },
+              title: {
+                display: true,
+                fontSize: 30,
+                text: 'Keyword Count in Tweets'
+              },
+              scales: {
+                yAxes: [{
+                         ticks: {
+                             beginAtZero: true,
+                             steps: 10,
+                             stepValue: 5,
+
+                         }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontSize: 15
+                    }
+                }]
+              }
+            }
+          });
+      });
 }

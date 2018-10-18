@@ -35,23 +35,59 @@
         .node--leaf {
             pointer-events: none;
         }
+        .node-mess {
+          cursor: pointer;
+        }
+
+        .node-mess circle {
+          fill: #fff;
+          stroke: steelblue;
+          stroke-width: 1.5px;
+        }
+
+        .node-mess text {
+          font: 10px sans-serif;
+        }
+
+        .link-mess {
+          fill: none;
+          /*stroke: steelblue;*/
+          opacity: 0.3;
+          /*stroke-width: 1.5px;*/
+        }
+
+        #levels-mess{
+          margin-left: 120px;
+        }
+
    </style>
 </head>
 <body>
     <div class="charts">
 			<h1>Charts</h1>
+            <h3>Word Occurence</h3>
 			<canvas id="word_occurence_count" width="500" height="500">
 			</canvas>
             <h3>Tweet Replies</h3>
             <p>The large circle containes all the tweets that had replies (tweets without replies are not included in this graph)</p>
             <p>The text specifies the tweet (by id) and the inner circles are the replies.</p>
+            <p>Out of 100,000 tweets received 1,144 had replies.</p>
             <svg id="replies" width="1500" height="1500"></svg>
             <h3>Tweets By Users</h3>
-            <p>The large circle containes all the users that had posted a tweet.
+            <p>The large circle containes all the users that had posted more than one tweet. The name of each user is followed by the number of tweets they have done.</p>
             <p>Inside each circle are smaller circles with the id of the tweets posted by the user.</p>
+            <p>Here are only the users that posted more than 3 tweet.</p>
             <svg id="messages" width="1500" height="1500"></svg>
-            <!-- <canvas id="screen_names_count" width="500" height="500">
-            </canvas> -->
+            <h3>Unique Screen Names</h3>
+            <p>The graph shows how many unique screen names there were per letter of the alphabet.</p>
+            <canvas id="usernames" width="1000" height="500">
+            </canvas>
+            <h3>Keyword Count</h3>
+            <p>The graph shows the keyword count that tweets tended to have.</p>
+            <canvas id="keyword_count" width="600" height="600">
+            </canvas>
+            <h3>Retweets</h3>
+            <p>No retweets were found in the data.</p>
     </div>
     <footer>
     	<p>2018 Copyright of ICOM6115. Look at the pretty graphs.</p>
